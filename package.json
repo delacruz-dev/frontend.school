@@ -1,0 +1,23 @@
+{
+  "name": "frontend.school",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "surge ./dist",
+    "build": "webpack -p"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bootstrap": "4.0.0-alpha.2",
+    "css-loader": "0.23.1",
+    "extract-text-webpack-plugin": "1.0.1",
+    "node-sass": "3.4.2",
+    "sass-loader": "3.1.2",
+    "style-loader": "0.13.0",
+    "webpack": "1.12.12",
+    "webpack-merge": "^0.7.3"
+  }
+}
