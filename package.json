@@ -4,20 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "deploy": "surge ./dist",
-    "build": "webpack -p"
+    "deploy": "npm run build && npm run publish",
+    "publish": "surge ./dist",
+    "build": "webpack -p",
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "bootstrap": "4.0.0-alpha.2",
+    "autoprefixer": "6.3.1",
     "css-loader": "0.23.1",
     "extract-text-webpack-plugin": "1.0.1",
     "node-sass": "3.4.2",
+    "postcss-loader": "0.8.0",
     "sass-loader": "3.1.2",
     "style-loader": "0.13.0",
     "webpack": "1.12.12",
-    "webpack-merge": "^0.7.3"
+    "webpack-dev-server": "1.14.1",
+    "webpack-merge": "0.7.3"
+  },
+  "dependencies": {
+    "basscss": "7.1.1"
   }
 }

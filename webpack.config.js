@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var merge = require('webpack-merge');
+var autoprefixer = require('autoprefixer');
 
 var APP_PATH = path.join(__dirname, '/src');
 var TARGET = process.env.npm_lifecycle_event;
@@ -9,10 +10,8 @@ var TARGET = process.env.npm_lifecycle_event;
 var common = {
   context: APP_PATH,
   entry: './',
-  output: {
-    path: path.join(__dirname, 'dist/scripts'),
-    filename: 'bundle.js',
-    publicPath: 'http://localhost:3000/dist/scripts'
+  postcss: function () {
+      return [autoprefixer({ browsers: ['last 10 versions'] })];
   },
   module: { loaders: [] },
   plugins: []
@@ -20,16 +19,20 @@ var common = {
 
 if(TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
+    output: {
+      filename: 'bundle.js',
+      publicPath: 'http://localhost:3000/dist/assets'
+    },
     devServer: {
       port: 3000,
       stats: { colors: true },
       inline: true,
-      publicPath: '/dist/'
+      publicPath: '/dist/assets'
     },
     module: {
       loaders: [{
-        test: /\.css$/,
-        loaders: [ 'style-loader', 'css-loader' ],
+        test: /\.s?css$/,
+        loaders: [ 'style-loader', 'css-loader', 'sass-loader', 'postcss-loader' ],
         include: APP_PATH
       }]
     },
@@ -41,10 +44,14 @@ if(TARGET === 'start' || !TARGET) {
 
 if(TARGET === 'build') {
   module.exports = merge(common, {
+    output: {
+      path: path.join(__dirname, 'dist/assets'),
+      filename: 'bundle.js'
+    },
     module: {
       loaders: [{
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader'),
+        test: /\.s?css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader', 'sass-loader', 'postcss-loader'),
         include: APP_PATH
       }]
     },
